@@ -167,7 +167,7 @@ export default function Home() {
         {isDropdownVisible && (
           <>
             <motion.div
-              className="fixed bg-zinc-900/50 h-dvh w-dvw top-0 left-0"
+              className="z-40 fixed bg-zinc-900/50 h-dvh w-dvw top-0 left-0"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -177,7 +177,7 @@ export default function Home() {
             />
 
             <motion.div
-              className="fixed top-0 right-0 w-dvw h-dvh p-4 flex flex-col gap-6 bg-white dark:bg-zinc-800"
+              className="z-50 fixed top-0 right-0 w-dvw h-dvh p-4 flex flex-col gap-6 bg-white dark:bg-zinc-800"
               initial={{ y: "100%" }}
               animate={{ y: "50%" }}
               exit={{ y: "100%" }}
@@ -213,7 +213,7 @@ export default function Home() {
       </AnimatePresence>
 
       <motion.div
-        className="flex flex-row gap-4 items-center justify-between fixed bottom-6 text-xs "
+        className="z-10 flex flex-row gap-4 items-center justify-between fixed bottom-6 text-xs "
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 1 }}
