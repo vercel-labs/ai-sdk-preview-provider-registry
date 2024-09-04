@@ -14,6 +14,7 @@ import {
 } from "@/components/icons";
 import Link from "next/link";
 import { useChat } from "ai/react";
+import { toast } from "sonner";
 
 const suggestedActions = [
   {
@@ -58,6 +59,9 @@ export default function Home() {
   const { messages, handleSubmit, input, setInput, append } = useChat({
     body: {
       model: selectedModel,
+    },
+    onError: () => {
+      toast.error("You have been rate limited, please try again later!");
     },
   });
 
