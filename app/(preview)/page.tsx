@@ -3,12 +3,13 @@
 import { useState } from "react";
 import { Message } from "@/components/message";
 import { useScrollToBottom } from "@/components/use-scroll-to-bottom";
-import { AnimatePresence, isDragActive, motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   LogoAnthropic,
   LogoGoogle,
   LogoOpenAI,
   MasonryIcon,
+  RouteIcon,
   VercelIcon,
 } from "@/components/icons";
 import Link from "next/link";
@@ -49,12 +50,14 @@ const getProviderIcon = (model: string) => {
 };
 
 export default function Home() {
-  const [model, setModel] = useState("anthropic:claude-3-sonnet-20240229");
+  const [selectedModel, setSelectedModel] = useState(
+    "anthropic:claude-3-sonnet-20240229",
+  );
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   const { messages, handleSubmit, input, setInput, append } = useChat({
     body: {
-      model,
+      model: selectedModel,
     },
   });
 
@@ -74,7 +77,7 @@ export default function Home() {
                 <p className="flex flex-row justify-center gap-4 items-center text-zinc-900 dark:text-zinc-50">
                   <VercelIcon size={16} />
                   <span>+</span>
-                  <MasonryIcon />
+                  <RouteIcon />
                 </p>
                 <p>
                   The experimental_createProviderRegistry function allows you to
@@ -137,11 +140,11 @@ export default function Home() {
         </div>
 
         <form
-          className="flex flex-row gap-2 relative items-center w-full md:max-w-[500px] max-w-[calc(100dvw-32px)"
+          className="flex flex-row gap-2 relative items-center w-full md:max-w-[500px] max-w-[calc(100dvw-32px) px-4 md:px-0"
           onSubmit={handleSubmit}
         >
           <input
-            className="bg-zinc-100 rounded-md px-2 py-1.5 w-full outline-none dark:bg-zinc-700 text-zinc-800 dark:text-zinc-300"
+            className="bg-zinc-100 rounded-md px-2 py-1.5 flex-1 outline-none dark:bg-zinc-700 text-zinc-800 dark:text-zinc-300"
             placeholder="Send a message..."
             value={input}
             onChange={(event) => {
@@ -150,46 +153,62 @@ export default function Home() {
           />
 
           <div
-            className="text-sm bg-zinc-100 rounded-lg size-9 flex-shrink-0 flex flex-row items-center justify-center cursor-pointer hover:bg-zinc-200"
+            className="text-sm bg-zinc-100 rounded-lg size-9 flex-shrink-0 flex flex-row items-center justify-center cursor-pointer hover:bg-zinc-200 dark:text-zinc-50 dark:bg-zinc-700 dark:hover:bg-zinc-800"
             onClick={() => {
               setIsDropdownVisible(!isDropdownVisible);
             }}
           >
-            {getProviderIcon(model)}
+            {getProviderIcon(selectedModel)}
           </div>
         </form>
       </div>
 
       <AnimatePresence>
         {isDropdownVisible && (
-          <motion.div
-            className="fixed top-0 right-0 w-72 h-dvh p-4 border-l flex flex-col gap-6 bg-white"
-            initial={{ x: 500 }}
-            animate={{ x: 0 }}
-            exit={{ x: 500 }}
-            transition={{ type: "spring", stiffness: 200, damping: 20 }}
-          >
-            <div className="text-sm">Choose a Model</div>
-            <div className="flex flex-col">
-              {models.map((model) => {
-                return (
-                  <div
-                    key={model}
-                    className="flex flex-row gap-4 items-center hover:bg-zinc-100 p-1.5 px-2 cursor-pointer rounded-lg"
-                    onClick={() => {
-                      setModel(model);
-                      setIsDropdownVisible(false);
-                    }}
-                  >
-                    <div className="">{getProviderIcon(model)}</div>
-                    <div className="text-sm text-zinc-500">
-                      {model.split(":")[1]}
+          <>
+            <motion.div
+              className="fixed bg-zinc-900/50 h-dvh w-dvw top-0 left-0"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => {
+                setIsDropdownVisible(false);
+              }}
+            />
+
+            <motion.div
+              className="fixed top-0 right-0 w-dvw h-dvh p-4 flex flex-col gap-6 bg-white dark:bg-zinc-800"
+              initial={{ y: "100%" }}
+              animate={{ y: "50%" }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", stiffness: 400, damping: 40 }}
+            >
+              <div className="text-sm">Choose a Model</div>
+              <div className="flex flex-col">
+                {models.map((model) => {
+                  return (
+                    <div
+                      key={model}
+                      className={`flex flex-row gap-4 items-center hover:bg-zinc-100 dark:hover:bg-zinc-700 p-1.5 px-2 cursor-pointer rounded-lg ${
+                        model === selectedModel
+                          ? "bg-zinc-100 dark:bg-zinc-700"
+                          : ""
+                      }`}
+                      onClick={() => {
+                        setSelectedModel(model);
+                        setIsDropdownVisible(false);
+                      }}
+                    >
+                      <div className="">{getProviderIcon(model)}</div>
+                      <div className="text-sm text-zinc-500 dark:text-zinc-400">
+                        {model.split(":")[1]}
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
-          </motion.div>
+                  );
+                })}
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </div>
