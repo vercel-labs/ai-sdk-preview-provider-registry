@@ -9,7 +9,6 @@ import {
   LogoAnthropic,
   LogoGoogle,
   LogoOpenAI,
-  MasonryIcon,
   RouteIcon,
   VercelIcon,
 } from "@/components/icons";
