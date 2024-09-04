@@ -13,7 +13,6 @@ import {
 } from "@/components/icons";
 import Link from "next/link";
 import { useChat } from "ai/react";
-import { Drawer } from "vaul";
 
 const suggestedActions = [
   {
