@@ -104,7 +104,6 @@ export default function Home() {
               key={message.id}
               role={message.role}
               content={message.content}
-              toolInvocations={message.toolInvocations}
             ></Message>
           ))}
           <div ref={messagesEndRef} />
