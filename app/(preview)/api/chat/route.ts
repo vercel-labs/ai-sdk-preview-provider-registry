@@ -12,7 +12,7 @@ const registry = experimental_createProviderRegistry({
 export async function POST(request: Request) {
   const { messages, model } = await request.json();
 
-  const stream = await streamText({
+  const stream = streamText({
     model: registry.languageModel(model),
     system: `\
       - you are a friendly assistant
