@@ -4,7 +4,7 @@ This example demonstrates how to use the [Vercel AI SDK](https://sdk.vercel.ai/d
 
 ## Deploy your own
 
-[![Deploy with Vercel](https://vercel.com/button)](https%3A%2F%2Fvercel.com%2Fnew%2Fclone%3Frepository-url%3Dhttps%3A%2F%2Fgithub.com%2Fvercel-labs%2Fai-sdk-preview-provider-registry%26env%3DOPENAI_API_KEY%2CANTHROPIC_API_KEY%2CGOOGLE_GENERATIVE_AI_API_KEY%26envDescription%3DAPI%20keys%20needed%20for%20application)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel-labs%2Fai-sdk-preview-provider-registry&env=OPENAI_API_KEY,ANTHROPIC_API_KEY,GOOGLE_GENERATIVE_AI_API_KEY&envDescription=API%20Keys%20needed%20for%20the%20application.)
 
 ## How to use
 
@@ -29,7 +29,6 @@ To run the example locally you need to:
 3. Set the required environment variables as shown in the `.env.example` file, but in a new file called `.env`.
 4. `npm install` to install the required dependencies.
 5. `npm run dev` to launch the development server.
-
 
 ## Learn More
 
