@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { BotIcon, UserIcon } from "./icons";
 import { ReactNode } from "react";
-import { Markdown } from "./markdown";
+import { Streamdown as Markdown } from "streamdown";
 
 export const Message = ({
   role,
