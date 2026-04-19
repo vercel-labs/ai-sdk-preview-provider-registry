@@ -1,15 +1,28 @@
-import { openai } from "@ai-sdk/openai";
-import { anthropic } from "@ai-sdk/anthropic";
+import { createOpenAI } from "@ai-sdk/openai";
+import { createAnthropic } from "@ai-sdk/anthropic";
+import { getVercelOidcToken } from "@vercel/functions/oidc";
 import { experimental_createProviderRegistry, streamText } from "ai";
-import { google } from "@ai-sdk/google";
-
-const registry = experimental_createProviderRegistry({
-  openai,
-  anthropic,
-  google,
-});
+import { checkBotId } from "botid/server";
 
 export async function POST(request: Request) {
+  const { isBot } = await checkBotId();
+  if (isBot) {
+    return new Response("Access denied", { status: 403 });
+  }
+
+  const token = await getVercelOidcToken();
+
+  const registry = experimental_createProviderRegistry({
+    openai: createOpenAI({
+      baseURL: "https://ai-gateway.vercel.sh/v1",
+      apiKey: token,
+    }),
+    anthropic: createAnthropic({
+      baseURL: "https://ai-gateway.vercel.sh/v1",
+      apiKey: token,
+    }),
+  });
+
   const { messages, model } = await request.json();
 
   const stream = await streamText({

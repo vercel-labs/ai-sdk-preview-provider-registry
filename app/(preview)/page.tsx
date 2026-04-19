@@ -31,8 +31,7 @@ const suggestedActions = [
 
 const models = [
   "openai:gpt-4o",
-  "anthropic:claude-3-sonnet-20240229",
-  "google:gemini-1.5-flash",
+  "anthropic:anthropic/claude-sonnet-4.5",
 ];
 
 const getProviderIcon = (model: string) => {
@@ -52,7 +51,7 @@ const getProviderIcon = (model: string) => {
 
 export default function Home() {
   const [selectedModel, setSelectedModel] = useState(
-    "anthropic:claude-3-sonnet-20240229",
+    "anthropic:anthropic/claude-sonnet-4.5",
   );
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
